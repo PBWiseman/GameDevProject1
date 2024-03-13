@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class GolemMovement : MonoBehaviour
 {
-    public float movementSpeed = 5f;
+    private float movementSpeed = 3f;
     GolemAnimation golemAnimation;
 
     Rigidbody2D rb;
 
-
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         golemAnimation = GetComponent<GolemAnimation>();
@@ -27,7 +25,15 @@ public class GolemMovement : MonoBehaviour
         inputVector = Vector2.ClampMagnitude(inputVector, 1);
         Vector2 movement = inputVector * movementSpeed;
         Vector2 newPos = currentPos + movement * Time.fixedDeltaTime;
-        //isoRenderer.SetDirection(movement);
+        if(horizontalInput < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else if(horizontalInput > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        golemAnimation.SetDirection(movement);
         rb.MovePosition(newPos);
     }
 }

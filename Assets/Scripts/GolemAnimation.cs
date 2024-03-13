@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class GolemAnimation : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    Animator animator;
+
+    void Awake()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetDirection(Vector2 direction)
     {
-        
+        if (direction.magnitude < .01f)
+        {
+            animator.Play("Idle");
+        }
+        else
+        {
+            animator.Play("Move");
+        }
     }
 }

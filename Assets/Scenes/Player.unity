@@ -131,6 +131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 80219178351287465, guid: feb9a8bdec3a22141a4cc05feef5b2d6, type: 3}
+      propertyPath: movementSpeed
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5267350149215086350, guid: feb9a8bdec3a22141a4cc05feef5b2d6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -174,6 +178,14 @@ PrefabInstance:
     - target: {fileID: 6042327664164677694, guid: feb9a8bdec3a22141a4cc05feef5b2d6, type: 3}
       propertyPath: m_Name
       value: Player_Golem
+      objectReference: {fileID: 0}
+    - target: {fileID: 7145236644308708126, guid: feb9a8bdec3a22141a4cc05feef5b2d6, type: 3}
+      propertyPath: m_Radius
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7145236644308708126, guid: feb9a8bdec3a22141a4cc05feef5b2d6, type: 3}
+      propertyPath: m_Offset.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
