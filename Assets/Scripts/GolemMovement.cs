@@ -33,7 +33,7 @@ public class GolemMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
-        golemAnimation.SetDirection(movement);
+        golemAnimation.Movement(movement);
         rb.MovePosition(newPos);
     }
 }

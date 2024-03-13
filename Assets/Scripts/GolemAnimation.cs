@@ -11,7 +11,7 @@ public class GolemAnimation : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    public void SetDirection(Vector2 direction)
+    public void Movement(Vector2 direction)
     {
         if (direction.magnitude < .01f)
         {
