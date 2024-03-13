@@ -22,4 +22,15 @@ public class GolemAnimation : MonoBehaviour
             animator.Play("Move");
         }
     }
+
+    public void Attack1()
+    {
+        animator.Play("Attack1");
+
+    }
+
+    public void Attack2()
+    {
+        animator.Play("Attack2");
+    }
 }

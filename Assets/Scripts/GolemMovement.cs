@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GolemMovement : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class GolemMovement : MonoBehaviour
         golemAnimation = GetComponent<GolemAnimation>();
     }
 
-    // Update is called once per frame
+    //Update is called once per frame
     void FixedUpdate()
     {
         Vector2 currentPos = rb.position;
@@ -35,5 +36,33 @@ public class GolemMovement : MonoBehaviour
         }
         golemAnimation.Movement(movement);
         rb.MovePosition(newPos);
+    }
+
+    // public void OnMove(InputValue value)
+    // {
+    //     Vector2 currentPos = rb.position;
+    //     Vector2 inputVector = value.Get<Vector2>();
+    //     Vector2 movement = inputVector * movementSpeed;
+    //     Vector2 newPos = currentPos + movement * Time.fixedDeltaTime;
+    //     if(inputVector.x < 0)
+    //     {
+    //         transform.localScale = new Vector3(-1, 1, 1);
+    //     }
+    //     else if(inputVector.x > 0)
+    //     {
+    //         transform.localScale = new Vector3(1, 1, 1);
+    //     }
+    //     golemAnimation.Movement(inputVector);
+    //     rb.MovePosition(newPos);
+    // }
+
+    public void OnAttack1()
+    {
+        golemAnimation.Attack1();
+    }
+
+    public void OnAttack2()
+    {
+        golemAnimation.Attack2();
     }
 }
