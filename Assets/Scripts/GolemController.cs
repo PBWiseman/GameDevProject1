@@ -6,6 +6,28 @@ using UnityEngine.InputSystem;
 public class GolemController : MonoBehaviour
 {
     private float movementSpeed = 3f;
+
+    public float CurrentSpeed
+    {
+        get
+        {
+            if (!CanMove)
+            {
+                //Not allowed to move
+                return 0;
+            }
+            if (IsMoving)
+            {
+                //Moving Speed
+                return movementSpeed;
+            }
+            else
+            {
+                //Idle Speed
+                return 0;
+            }
+        }
+    }
     private Vector2 moveInput;
     private bool _ismoving = false;
     public bool IsMoving
@@ -17,7 +39,14 @@ public class GolemController : MonoBehaviour
         private set
         {
             _ismoving = value;
-            animator.SetBool("IsMoving", value);
+            animator.SetBool(AnimationStrings.IsMoving, value);
+        }
+    }
+    public bool CanMove
+    {
+        get
+        {
+            return animator.GetBool(AnimationStrings.canMove);
         }
     }
     Rigidbody2D rb;
@@ -32,7 +61,7 @@ public class GolemController : MonoBehaviour
     //Update is called once per frame
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(moveInput.x * movementSpeed, moveInput.y * movementSpeed);
+        rb.velocity = new Vector2(moveInput.x * CurrentSpeed, moveInput.y * CurrentSpeed);
     }
 
     public void OnMove(InputValue value)
@@ -51,13 +80,13 @@ public class GolemController : MonoBehaviour
         }
     }
 
-    // public void OnAttack1()
-    // {
-    //
-    // }
+    public void OnAttack1()
+    {
+        animator.SetTrigger(AnimationStrings.attack1);
+    }
 
-    // public void OnAttack2()
-    // {
-    //
-    // }
+    public void OnAttack2()
+    {
+        animator.SetTrigger(AnimationStrings.attack2);
+    }
 }
