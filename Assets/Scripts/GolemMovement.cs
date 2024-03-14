@@ -8,12 +8,28 @@ public class GolemMovement : MonoBehaviour
     private float movementSpeed = 3f;
     GolemAnimation golemAnimation;
 
+    private bool _ismoving = false;
+    public bool IsMoving
+    {
+        get
+        {
+            return _ismoving;
+        }
+        private set
+        {
+            _ismoving = value;
+            Debug.Log("IsMoving: " + value);
+            animator.SetBool("IsMoving", value);
+        }
+    }
     Rigidbody2D rb;
+    Animator animator;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         golemAnimation = GetComponent<GolemAnimation>();
+        animator = GetComponent<Animator>();
     }
 
     //Update is called once per frame
@@ -26,15 +42,24 @@ public class GolemMovement : MonoBehaviour
         inputVector = Vector2.ClampMagnitude(inputVector, 1);
         Vector2 movement = inputVector * movementSpeed;
         Vector2 newPos = currentPos + movement * Time.fixedDeltaTime;
-        if(horizontalInput < 0)
+        if (horizontalInput < 0)
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
-        else if(horizontalInput > 0)
+        else if (horizontalInput > 0)
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
-        golemAnimation.Movement(movement);
+        //Debug.Log(movement.magnitude);
+        if (movement.magnitude < .01f)
+        {
+            IsMoving = false;
+        }
+        else
+        {
+            IsMoving = true;
+        }
+        //golemAnimation.Movement(movement);
         rb.MovePosition(newPos);
     }
 
@@ -56,13 +81,13 @@ public class GolemMovement : MonoBehaviour
     //     rb.MovePosition(newPos);
     // }
 
-    public void OnAttack1()
-    {
-        golemAnimation.Attack1();
-    }
+    // public void OnAttack1()
+    // {
+    //     golemAnimation.Attack1();
+    // }
 
-    public void OnAttack2()
-    {
-        golemAnimation.Attack2();
-    }
+    // public void OnAttack2()
+    // {
+    //     golemAnimation.Attack2();
+    // }
 }
