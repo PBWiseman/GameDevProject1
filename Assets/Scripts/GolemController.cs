@@ -49,6 +49,14 @@ public class GolemController : MonoBehaviour
             return animator.GetBool(AnimationStrings.canMove);
         }
     }
+
+    public bool isAlive
+    {
+        get
+        {
+            return animator.GetBool(AnimationStrings.isAlive);
+        }
+    }
     Rigidbody2D rb;
     Animator animator;
 
@@ -67,6 +75,11 @@ public class GolemController : MonoBehaviour
     public void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+        if(isAlive) //If the player is not alive they cannot move
+        {
+            IsMoving = false;
+            return;
+        }
         //If the move input is not zero then the golem is moving and the animation will play
         IsMoving = moveInput != Vector2.zero;
         //This will flip the sprite if it moves the opposite direction but if it doesnt move at all it will stay facing the same way
