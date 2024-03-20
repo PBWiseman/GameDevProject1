@@ -4,21 +4,44 @@ using UnityEngine;
 
 public class Skeleton : MonoBehaviour
 {
-    public float speed = 3.0f;
+    public float speed = 2.0f;
+
+    private Rigidbody2D rb;
+
+    private Vector2 walkDirectionVector;
+
+    public enum WalkableDirection { Left, Right }
+
+    private WalkableDirection walkDirection;
+
+    public WalkableDirection WalkDirection
+    {
+        get { return walkDirection; }
+        set
+        {
+            if(value != walkDirection)
+            {
+                gameObject.transform.localScale = new Vector3(-gameObject.transform.localScale.x, gameObject.transform.localScale.y, gameObject.transform.localScale.z);
+                if(value == WalkableDirection.Right)
+                {
+                    walkDirectionVector = Vector2.right;
+                }
+                else
+                {
+                    walkDirectionVector = Vector2.left;
+                }
+            }
+            walkDirection = value;
+        }
+    }
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        rb.velocity = new Vector2(speed * walkDirectionVector, rb.velocity.y);
     }
 }
