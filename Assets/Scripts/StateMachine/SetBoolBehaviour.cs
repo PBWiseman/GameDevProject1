@@ -47,7 +47,6 @@ public class SetBoolBehaviour : StateMachineBehaviour
     // OnStateMachineEnter is called when entering a state machine via its Entry Node
     override public void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
     {
-        Debug.Log("OnStateMachineEnter");
         if (updateOnStateMachine)
         {
             animator.SetBool(boolName, valueOnEnter);
@@ -57,7 +56,6 @@ public class SetBoolBehaviour : StateMachineBehaviour
     // OnStateMachineExit is called when exiting a state machine via its Exit Node
     override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
     {
-        Debug.Log("OnStateMachineExit");
         if (updateOnStateMachine)
         {
             animator.SetBool(boolName, valueOnExit);

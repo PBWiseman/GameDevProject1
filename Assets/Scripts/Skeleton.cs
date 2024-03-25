@@ -42,6 +42,6 @@ public class Skeleton : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(speed * walkDirectionVector, rb.velocity.y);
+        rb.velocity = new Vector2(speed * walkDirectionVector.x, rb.velocity.y);
     }
 }
