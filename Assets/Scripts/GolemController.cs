@@ -85,11 +85,13 @@ public class GolemController : MonoBehaviour
         //This will flip the sprite if it moves the opposite direction but if it doesnt move at all it will stay facing the same way
         if (moveInput.x < 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            //TODO: Need to have this abs positive and the other abs negative
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
         else if (moveInput.x > 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            //Flip the sprite on the x axis while keeping the current local scale
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
     }
 
