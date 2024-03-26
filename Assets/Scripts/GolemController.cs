@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class GolemController : MonoBehaviour
 {
@@ -85,13 +86,11 @@ public class GolemController : MonoBehaviour
         //This will flip the sprite if it moves the opposite direction but if it doesnt move at all it will stay facing the same way
         if (moveInput.x < 0)
         {
-            //TODO: Need to have this abs positive and the other abs negative
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(-Math.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         else if (moveInput.x > 0)
         {
-            //Flip the sprite on the x axis while keeping the current local scale
-            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(Math.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
     }
 
