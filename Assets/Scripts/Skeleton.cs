@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Skeleton : MonoBehaviour
 {
-    public float speed = 2.0f;
+    private float speed = 1.0f;
 
     private Rigidbody2D rb;
 
@@ -13,6 +13,10 @@ public class Skeleton : MonoBehaviour
     public enum WalkableDirection { Left, Right }
 
     private WalkableDirection walkDirection;
+
+    private GameObject player;
+
+    private Vector2 playerPosition;
 
     public WalkableDirection WalkDirection
     {
@@ -40,8 +44,34 @@ public class Skeleton : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(speed * walkDirectionVector.x, rb.velocity.y);
+        //Get the players location and move towards it
+        if (player != null)
+        {
+            playerPosition = player.transform.position;
+            if (playerPosition.x < transform.position.x)
+            {
+                WalkDirection = WalkableDirection.Left;
+            }
+            else
+            {
+                WalkDirection = WalkableDirection.Right;
+            }
+            walkDirectionVector = playerPosition - (Vector2)transform.position;
+            walkDirectionVector.y -= .7f; //This makes this skeleton move towards the player's feet rather than the center of the players model. Makes it look better
+            walkDirectionVector.Normalize();
+            rb.velocity = new Vector2(speed * walkDirectionVector.x, speed * walkDirectionVector.y);
+        }
+        else
+        {
+            rb.velocity = new Vector2(0, 0);
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 }
