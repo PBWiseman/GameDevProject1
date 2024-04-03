@@ -5,18 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class Portal : MonoBehaviour
 {
-    private bool inDungeon;
+    public bool inDungeon;
+    private bool used;
     // Start is called before the first frame update
     void Start()
     {
-        if (SceneManager.GetActiveScene().name != "Town")
-        {
-            inDungeon = true;
-        }
-        else
-        {
-            inDungeon = false;
-        }
+        used = false;
     }
 
     // Update is called once per frame
@@ -31,14 +25,18 @@ public class Portal : MonoBehaviour
     //When the player interacts with the portal, check if they are in the town or the dungeon and load the other scene
     public void PortalUse()
     {
-        Debug.Log("Portal used");
-        if (inDungeon)
+        if(!used)
         {
-            GoToTown();
-        }
-        else
-        {
-            GoToDungeon();
+            used = true;
+            Debug.Log("Portal used");
+            if (inDungeon)
+            {
+                GoToTown();
+            }
+            else
+            {
+                GoToDungeon();
+            }
         }
     }
 
@@ -46,8 +44,8 @@ public class Portal : MonoBehaviour
     private void GoToTown()
     {
         //TODO: Add animation
-        SceneManager.LoadScene("Town");
         SceneManager.UnloadSceneAsync("Dungeon1");
+        SceneManager.LoadScene("Town", LoadSceneMode.Additive);
     }
 
     //If the player is in the town and interacts with the portal, load dungeon
@@ -55,7 +53,7 @@ public class Portal : MonoBehaviour
     private void GoToDungeon()
     {
         //TODO: Add animation
-        SceneManager.LoadScene("Dungeon1");
         SceneManager.UnloadSceneAsync("Town");
+        SceneManager.LoadScene("Dungeon1", LoadSceneMode.Additive);
     }
 }
