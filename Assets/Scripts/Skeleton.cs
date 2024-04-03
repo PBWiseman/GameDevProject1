@@ -4,7 +4,58 @@ using UnityEngine;
 
 public class Skeleton : MonoBehaviour
 {
-    private float speed = 1.0f;
+    private float movementSpeed = 1.0f;
+
+    public float CurrentSpeed
+    {
+        get
+        {
+            if (!CanMove)
+            {
+                //Not allowed to move
+                return 0;
+            }
+            if (IsMoving)
+            {
+                //Moving Speed
+                return movementSpeed;
+            }
+            else
+            {
+                //Idle Speed
+                return 0;
+            }
+        }
+    }
+
+    private bool _ismoving = false;
+    public bool IsMoving
+    {
+        get
+        {
+            return _ismoving;
+        }
+        private set
+        {
+            _ismoving = value;
+            animator.SetBool(AnimationStrings.IsMoving, value);
+        }
+    }
+    public bool CanMove
+    {
+        get
+        {
+            return animator.GetBool(AnimationStrings.canMove);
+        }
+    }
+
+    public bool isAlive
+    {
+        get
+        {
+            return animator.GetBool(AnimationStrings.isAlive);
+        }
+    }
 
     private Rigidbody2D rb;
 
@@ -17,6 +68,7 @@ public class Skeleton : MonoBehaviour
     private GameObject player;
 
     private Vector2 playerPosition;
+    private Animator animator;
 
     public WalkableDirection WalkDirection
     {
@@ -42,6 +94,7 @@ public class Skeleton : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     void Start()
@@ -54,6 +107,11 @@ public class Skeleton : MonoBehaviour
         //Get the players location and move towards it
         if (player != null)
         {
+            if(isAlive) //If the enemy is not alive they cannot move
+            {
+                IsMoving = false;
+                return;
+            }
             playerPosition = player.transform.position;
             if (playerPosition.x < transform.position.x)
             {
@@ -63,15 +121,31 @@ public class Skeleton : MonoBehaviour
             {
                 WalkDirection = WalkableDirection.Right;
             }
+            //If player is near then attack
+            if (Vector2.Distance(playerPosition, transform.position) < 2f)
+            {
+                OnAttack();
+                IsMoving = false;
+            }
+            else
+            {
+                IsMoving = true;
+            }
             walkDirectionVector = playerPosition - (Vector2)transform.position;
             walkDirectionVector.y -= .7f; //This makes this skeleton move towards the player's feet rather than the center of the players model. Makes it look better
             walkDirectionVector.Normalize();
-            rb.velocity = new Vector2(speed * walkDirectionVector.x, speed * walkDirectionVector.y);
+            rb.velocity = new Vector2(CurrentSpeed * walkDirectionVector.x, CurrentSpeed * walkDirectionVector.y);
         }
         else
         {
+            IsMoving = false;
             rb.velocity = new Vector2(0, 0);
             player = GameObject.FindGameObjectWithTag("Player");
         }
     }
+    public void OnAttack()
+    {
+        animator.SetTrigger(AnimationStrings.attack);
+    }
+
 }

@@ -58,8 +58,8 @@ public class GolemController : MonoBehaviour
             return animator.GetBool(AnimationStrings.isAlive);
         }
     }
-    Rigidbody2D rb;
-    Animator animator;
+    private Rigidbody2D rb;
+    private Animator animator;
 
     void Awake()
     {
