@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4763287737777949615}
   - component: {fileID: 5508986868472177391}
   - component: {fileID: 776788075933967509}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player_Golem
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1845486320394209047}
   - component: {fileID: 8266387218865410512}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PlayerCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

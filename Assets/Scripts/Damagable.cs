@@ -51,9 +51,6 @@ public class Damagable : MonoBehaviour
         {
             isAlive = value;
             animator.SetBool(AnimationStrings.isAlive, value);
-            Debug.Log("IsAlive: " + value);
-            //TODO: End game screen
-            //Freeze the game and put up a screen?
         }
     }
 
@@ -86,6 +83,7 @@ public class Damagable : MonoBehaviour
         {
             Health -= damage;
             isInvincible = true;
+            Debug.Log("Health: " + Health);
         }
     }
 }

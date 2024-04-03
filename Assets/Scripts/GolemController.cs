@@ -76,8 +76,10 @@ public class GolemController : MonoBehaviour
     public void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
-        if(isAlive) //If the player is not alive they cannot move
+        if(!isAlive) //If the player is not alive they cannot move
         {
+            GameOver();
+            canMove = false;
             IsMoving = false;
             return;
         }
@@ -92,6 +94,11 @@ public class GolemController : MonoBehaviour
         {
             transform.localScale = new Vector3(Math.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
+    }
+
+    public void GameOver()
+    {
+        animator.SetTrigger(AnimationStrings.attack1);
     }
 
     public void OnAttack1()
