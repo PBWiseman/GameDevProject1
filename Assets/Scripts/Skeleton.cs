@@ -1,3 +1,8 @@
+/// <summary>
+///  File that controls the skeleton enemy\
+/// TODO: Skeleton can't be moved on death
+/// TODO: Skeleton body disappears a little bit after death
+/// </summary>
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +18,7 @@ public class Skeleton : MonoBehaviour
     {
         get
         {
-            if (!CanMove)
+            if (!CanMove || !isAlive)
             {
                 //Not allowed to move
                 return 0;
@@ -121,6 +126,7 @@ public class Skeleton : MonoBehaviour
             if(!isAlive) //If the enemy is not alive they cannot move
             {
                 IsMoving = false;
+                rb.velocity = new Vector2(0, 0);
                 return;
             }
             playerPosition = player.transform.position;
