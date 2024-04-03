@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using System;
+
 
 public class Skeleton : MonoBehaviour
 {
@@ -57,6 +60,14 @@ public class Skeleton : MonoBehaviour
         }
     }
 
+    public bool isAttacking
+    {
+        get
+        {
+            return animator.GetBool(AnimationStrings.isAttacking);
+        }
+    }
+
     private Rigidbody2D rb;
 
     private Vector2 walkDirectionVector;
@@ -107,22 +118,25 @@ public class Skeleton : MonoBehaviour
         //Get the players location and move towards it
         if (player != null)
         {
-            if(isAlive) //If the enemy is not alive they cannot move
+            if(!isAlive) //If the enemy is not alive they cannot move
             {
                 IsMoving = false;
                 return;
             }
             playerPosition = player.transform.position;
-            if (playerPosition.x < transform.position.x)
+            if (!isAttacking)
             {
-                WalkDirection = WalkableDirection.Left;
+                if (playerPosition.x < transform.position.x)
+                {
+                    WalkDirection = WalkableDirection.Left;
+                }
+                else
+                {
+                    WalkDirection = WalkableDirection.Right;
+                }
             }
-            else
-            {
-                WalkDirection = WalkableDirection.Right;
-            }
-            //If player is near then attack
-            if (Vector2.Distance(playerPosition, transform.position) < 2f)
+            //If player is near the x axis and roughly the same y axis then attack
+            if (Mathf.Abs(playerPosition.x - transform.position.x) < 1.8f && Mathf.Abs((playerPosition.y) - transform.position.y) < .8f)
             {
                 OnAttack();
                 IsMoving = false;

@@ -71,18 +71,20 @@ public class GolemController : MonoBehaviour
     void FixedUpdate()
     {
         rb.velocity = new Vector2(moveInput.x * CurrentSpeed, moveInput.y * CurrentSpeed);
+        if(!isAlive) //If the player is not alive they cannot move
+        {
+            GameOver();
+            return;
+        }
     }
 
     public void OnMove(InputValue value)
     {
-        moveInput = value.Get<Vector2>();
-        if(!isAlive) //If the player is not alive they cannot move
+        if (Time.timeScale == 0)
         {
-            GameOver();
-            canMove = false;
-            IsMoving = false;
             return;
         }
+        moveInput = value.Get<Vector2>();
         //If the move input is not zero then the golem is moving and the animation will play
         IsMoving = moveInput != Vector2.zero;
         //This will flip the sprite if it moves the opposite direction but if it doesnt move at all it will stay facing the same way
@@ -98,7 +100,8 @@ public class GolemController : MonoBehaviour
 
     public void GameOver()
     {
-        animator.SetTrigger(AnimationStrings.attack1);
+        //Stop game timer
+        Time.timeScale = 0;
     }
 
     public void OnAttack1()

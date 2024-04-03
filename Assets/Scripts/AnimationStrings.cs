@@ -12,4 +12,6 @@ public static class AnimationStrings
     public static string attack2 = "attack2";
     public static string canMove = "canMove";
     public static string isAlive = "isAlive";
+    public static string isAttacking = "isAttacking";
+    public static string isHit = "isHit";
 }
