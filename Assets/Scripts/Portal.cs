@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Portal : MonoBehaviour
 {
     public bool inDungeon;
+    private bool inRange;
     private bool used;
     // Start is called before the first frame update
     void Start()
@@ -16,7 +17,7 @@ public class Portal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && inRange)
         {
             PortalUse();
         }
@@ -28,7 +29,6 @@ public class Portal : MonoBehaviour
         if(!used)
         {
             used = true;
-            Debug.Log("Portal used");
             if (inDungeon)
             {
                 GoToTown();
@@ -55,5 +55,19 @@ public class Portal : MonoBehaviour
         //TODO: Add animation
         SceneManager.UnloadSceneAsync("Town");
         SceneManager.LoadScene("Dungeon1", LoadSceneMode.Additive);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            inRange = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            inRange = false;
+        }
     }
 }
