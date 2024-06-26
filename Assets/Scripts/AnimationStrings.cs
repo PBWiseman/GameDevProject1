@@ -1,3 +1,11 @@
+/// <remarks>
+/// Author: Palin Wiseman
+/// Date Created: April 4, 2024
+/// Bugs: None known at this time.
+/// </remarks>
+// <summary>
+/// This script is used to store all the strings used in the animations for the player.
+/// </summary>
 using System;
 using System.Collections;
 using System.Collections.Generic;

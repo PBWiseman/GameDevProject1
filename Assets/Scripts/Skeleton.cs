@@ -1,7 +1,11 @@
-/// <summary>
-///  File that controls the skeleton enemy\
-/// TODO: Skeleton can't be moved on death
-/// TODO: Skeleton body disappears a little bit after death
+/// <remarks>
+/// Author: Palin Wiseman
+/// Date Created: March 21, 2024
+/// Bugs: Skeleton can be moved on death
+///       Skeleton body doesn't disappear immediately
+/// </remarks>
+// <summary>
+/// This script is used to handle the skeleton enemy
 /// </summary>
 using System.Collections;
 using System.Collections.Generic;
@@ -12,8 +16,9 @@ using System;
 
 public class Skeleton : MonoBehaviour
 {
+    //Speed of the skeleton
     private float movementSpeed = 1.0f;
-
+    //Current speed of the skeleton
     public float CurrentSpeed
     {
         get
@@ -35,8 +40,9 @@ public class Skeleton : MonoBehaviour
             }
         }
     }
-
+    //Boolean for if the skeleton is moving
     private bool _ismoving = false;
+    //Public accessor for isMoving
     public bool IsMoving
     {
         get
@@ -49,6 +55,7 @@ public class Skeleton : MonoBehaviour
             animator.SetBool(AnimationStrings.IsMoving, value);
         }
     }
+    //Boolean for if the skeleton can move
     public bool CanMove
     {
         get
@@ -56,7 +63,7 @@ public class Skeleton : MonoBehaviour
             return animator.GetBool(AnimationStrings.canMove);
         }
     }
-
+    //Boolean for if the skeleton is alive
     public bool isAlive
     {
         get
@@ -64,7 +71,7 @@ public class Skeleton : MonoBehaviour
             return animator.GetBool(AnimationStrings.isAlive);
         }
     }
-
+    //Boolean for if the skeleton is attacking
     public bool isAttacking
     {
         get
@@ -76,21 +83,22 @@ public class Skeleton : MonoBehaviour
     private Rigidbody2D rb;
 
     private Vector2 walkDirectionVector;
-
+    //Enum for the direction the skeleton can walk
     public enum WalkableDirection { Left, Right }
 
-    private WalkableDirection walkDirection;
-
     private GameObject player;
-
+    //Current position of the player
     private Vector2 playerPosition;
     private Animator animator;
-
+    //The direction the skeleton is walking
+    private WalkableDirection walkDirection;
+    //Public accessor for walk direction
     public WalkableDirection WalkDirection
     {
         get { return walkDirection; }
         set
         {
+            //If the direction is different then flip the sprite
             if(value != walkDirection)
             {
                 gameObject.transform.localScale = new Vector3(-gameObject.transform.localScale.x, gameObject.transform.localScale.y, gameObject.transform.localScale.z);
@@ -115,6 +123,7 @@ public class Skeleton : MonoBehaviour
 
     void Start()
     {
+        //Find the player object
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -130,6 +139,7 @@ public class Skeleton : MonoBehaviour
                 return;
             }
             playerPosition = player.transform.position;
+            //If the player is to the left of the skeleton, walk left. Otherwise walk right
             if (!isAttacking)
             {
                 if (playerPosition.x < transform.position.x)
@@ -158,11 +168,15 @@ public class Skeleton : MonoBehaviour
         }
         else
         {
+            //If the player is null then the player is dead and the skeleton should stop moving
             IsMoving = false;
             rb.velocity = new Vector2(0, 0);
             player = GameObject.FindGameObjectWithTag("Player");
         }
     }
+    /// <summary>
+    /// This function is called when the skeleton attacks
+    /// </summary> 
     public void OnAttack()
     {
         animator.SetTrigger(AnimationStrings.attack);

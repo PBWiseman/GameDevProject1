@@ -1,3 +1,11 @@
+/// <remarks>
+/// Author: Palin Wiseman
+/// Date Created: March 24, 2024
+/// Bugs: None known at this time.
+/// </remarks>
+// <summary>
+/// This script is used to handle the health of an object
+/// </summary>
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +13,13 @@ using UnityEngine;
 public class Damagable : MonoBehaviour
 {
     Animator animator;
+    //Invincibility time after being hit
     public float invincibilityTime = 0.25f;
+    //Time since last hit
     private float timeSinceHit = 0;
-    [SerializeField]
-    private int maxHealth = 100;
+    //Max health of the object
+    [SerializeField] private int maxHealth = 100;
+    //Public accessor for max health
     public int MaxHealth
     {
         get
@@ -21,8 +32,9 @@ public class Damagable : MonoBehaviour
         
         }
     }
-    [SerializeField]
-    private int health = 100;
+    //Current health of the object
+    [SerializeField] private int health = 100;
+    //Public accessor for health
     public int Health
     {
         get
@@ -39,8 +51,9 @@ public class Damagable : MonoBehaviour
             }
         }
     }
-    [SerializeField]
+    //Boolean for if the object is alive
     private bool isAlive = true;
+    //Public accessor for isAlive
     public bool IsAlive
     {
         get
@@ -53,7 +66,7 @@ public class Damagable : MonoBehaviour
             animator.SetBool(AnimationStrings.isAlive, value);
         }
     }
-
+    //Boolean for if the object is invincible
     private bool isInvincible = false;
 
     void Awake()
@@ -63,6 +76,7 @@ public class Damagable : MonoBehaviour
 
     void Update()
     {
+        //If invincible, check if invincibility time has passed
         if (isInvincible)
         {
             if(timeSinceHit > invincibilityTime)
@@ -77,6 +91,10 @@ public class Damagable : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Deal damage to the object
+    /// </summary>
+    /// <param name="damage">Damage to be dealt</param>
     public void Hit(int damage)
     {
         if (IsAlive && !isInvincible)

@@ -1,3 +1,11 @@
+/// <remarks>
+/// Author: Palin Wiseman
+/// Date Created: March 15, 2024
+/// Bugs: None known at this time.
+/// </remarks>
+// <summary>
+/// This script is used to set a boolean value on the animator when entering or exiting a state or state machine.
+/// </summary>
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +16,12 @@ public class SetBoolBehaviour : StateMachineBehaviour
     public bool updateOnStateMachine, updateOnState;
     public bool valueOnEnter, valueOnExit;
 
-    // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
+    /// <summary>
+    /// OnStateEnter is called on entering a state in the animator
+    /// </summary>
+    /// <param name="animator">The animator used</param>
+    /// <param name="stateInfo">The state info</param>
+    /// <param name="layerIndex">The index of the layer</param>
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (updateOnState)
@@ -16,14 +29,12 @@ public class SetBoolBehaviour : StateMachineBehaviour
             animator.SetBool(boolName, valueOnEnter);
         }
     }
-
-    // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
-
-    // OnStateExit is called before OnStateExit is called on any state inside this state machine
+    /// <summary>
+    /// OnStateExit is called on exiting a state in the animator
+    /// </summary>
+    /// <param name="animator">The animator used</param>
+    /// <param name="stateInfo">The state info</param>
+    /// <param name="layerIndex">The index of the layer</param>
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (updateOnState)
@@ -32,19 +43,13 @@ public class SetBoolBehaviour : StateMachineBehaviour
         }
     }
 
-    // OnStateMove is called before OnStateMove is called on any state inside this state machine
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
 
-    // OnStateIK is called before OnStateIK is called on any state inside this state machine
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
-
-    // OnStateMachineEnter is called when entering a state machine via its Entry Node
+    /// <summary>
+    /// OnStateMachineEnter is called when entering a state machine in the animator via its Entry Node
+    /// </summary>
+    /// <param name="animator">The animator used</param>
+    /// <param name="stateInfo">The state info</param>
+    /// <param name="layerIndex">The index of the layer</param>
     override public void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
     {
         if (updateOnStateMachine)
@@ -52,8 +57,13 @@ public class SetBoolBehaviour : StateMachineBehaviour
             animator.SetBool(boolName, valueOnEnter);
         }
     }
-
-    // OnStateMachineExit is called when exiting a state machine via its Exit Node
+    
+    /// <summary>
+    /// OnStateMachineExit is called when exiting a state machine in the animator via its Exit Node
+    /// </summary>
+    /// <param name="animator">The animator used</param>
+    /// <param name="stateInfo">The state info</param>
+    /// <param name="layerIndex">The index of the layer</param>
     override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
     {
         if (updateOnStateMachine)
